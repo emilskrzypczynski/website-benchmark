@@ -62,10 +62,9 @@ class BenchmarkController extends AbstractController
         $form = $this->createForm(BenchmarkType::class, $benchmarkRequest);
 
         $form->handleRequest($request);
-
-        $benchmarkHtmlReport = $this->session->get('lastReport');
-
         if ($form->isSubmitted()) {
+            $this->session->remove('lastReport');
+
             if ($form->isValid()) {
                 try {
                     $benchmark = $this->benchmarkService->createFromRequest($benchmarkRequest);
@@ -95,8 +94,6 @@ class BenchmarkController extends AbstractController
                     );
                 }
             } else {
-                $this->session->remove('lastReport');
-
                 $this->addFlash(
                     "danger",
                     $this->translator->trans('form.global.check_form_errors', [], 'messages')
@@ -106,7 +103,7 @@ class BenchmarkController extends AbstractController
 
         return $this->render('benchmark/index.html.twig', [
             'form' => $form->createView(),
-            'report' => $benchmarkHtmlReport
+            'report' => $this->session->get('lastReport')
         ]);
     }
 }
