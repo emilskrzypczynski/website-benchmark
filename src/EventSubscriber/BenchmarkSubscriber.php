@@ -14,6 +14,7 @@ use App\Event\Events;
 use App\Mailer\MailerInterface;
 use App\Mailer\NotificationMailer;
 use App\Report\BenchmarkLogReportGenerator;
+use App\SMS\SMSNotifier;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
@@ -22,6 +23,9 @@ class BenchmarkSubscriber implements EventSubscriberInterface
     /** @var NotificationMailer */
     private $notificationMailer;
 
+    /** @var SMSNotifier */
+    private $SMSNotifier;
+
     /** @var BenchmarkLogReportGenerator */
     private $benchmarkLogReportGenerator;
 
@@ -29,16 +33,11 @@ class BenchmarkSubscriber implements EventSubscriberInterface
     private $benchmarkAnalyzer;
 
 
-    /**
-     * BenchmarkSubscriber constructor.
-     *
-     * @param MailerInterface               $notificationMailer
-     * @param BenchmarkLogReportGenerator   $benchmarkLogReportGenerator
-     * @param BenchmarkAnalyzer             $benchmarkAnalyzer
-     */
-    public function __construct(MailerInterface $notificationMailer, BenchmarkLogReportGenerator $benchmarkLogReportGenerator, BenchmarkAnalyzer $benchmarkAnalyzer)
+
+    public function __construct(MailerInterface $notificationMailer, SMSNotifier $SMSNotifier, BenchmarkLogReportGenerator $benchmarkLogReportGenerator, BenchmarkAnalyzer $benchmarkAnalyzer)
     {
         $this->notificationMailer = $notificationMailer;
+        $this->SMSNotifier = $SMSNotifier;
         $this->benchmarkLogReportGenerator = $benchmarkLogReportGenerator;
         $this->benchmarkAnalyzer = $benchmarkAnalyzer;
     }
@@ -77,6 +76,10 @@ class BenchmarkSubscriber implements EventSubscriberInterface
 
         if ($this->benchmarkAnalyzer->isTestedWebsiteSlowerThanAtLeastOneCompetitor($benchmark)) {
             $this->notificationMailer->sendWarningNotification($event->getBenchmark());
+        }
+
+        if ($this->benchmarkAnalyzer->isTestedWebsiteLoadedTwiceAsSlowAsAtLeastOneCompetitor($benchmark)) {
+            $this->SMSNotifier->sendWarningNotification($benchmark);
         }
     }
 }

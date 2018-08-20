@@ -44,7 +44,7 @@ class BenchmarkAnalyzer implements BenchmarkAnalyzerInterface
 
         /** @var WebsiteTestInterface $competitorTest */
         foreach ($benchmark->getCompetitorTests() as $competitorTest) {
-            if ($competitorTest->getLoadTime() / $testedWebsiteLoadTime > 2) {
+            if ($testedWebsiteLoadTime / $competitorTest->getLoadTime() > 2) {
                 $result = true;
 
                 break;

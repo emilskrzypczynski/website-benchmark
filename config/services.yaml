@@ -5,7 +5,15 @@ parameters:
         from: emilskrzypczynski09@gmail.com
         to: emilskrzypczynski09@gmail.com
 
+    sms_api_credentials:
+        key: '%env(SMS_API_KEY)%'
+        secret: '%env(SMS_API_SECRET)%'
+
+    sms_api_config:
+        to: 100 200 300
+
     benchmark_logfile_dir: '%kernel.logs_dir%/log.txt'
+    sms_logfile_dir: '%kernel.logs_dir%/sms_log.txt'
 
 services:
     _defaults:
@@ -20,6 +28,19 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\SMS\SMSApi:
+        arguments:
+            - '%sms_api_credentials%'
+            - '@logger'
+        tags:
+            - { name: monolog.logger, channel: sms }
+
+    App\SMS\SMSNotifier:
+        arguments:
+            - '@App\SMS\SMSApi'
+            - '%sms_api_config%'
+            - '@translator'
 
     App\Mailer\NotificationMailer:
         arguments:

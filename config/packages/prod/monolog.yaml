@@ -27,3 +27,7 @@ monolog:
             type: stream
             path: "%benchmark_logfile_dir%"
             channels: ["benchmark"]
+        sms:
+            type: stream
+            path: "%sms_logfile_dir%"
+            channels: ["sms"]
