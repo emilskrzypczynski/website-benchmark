@@ -1,6 +1,6 @@
 1. Download project
 
-    `git clone git@github.com:emilskrzypczynski/website-benchmark.git`
+    `git clone https://github.com/emilskrzypczynski/website-benchmark.git`
 
 2. Go to project dir
 
