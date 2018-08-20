@@ -82,8 +82,8 @@ class BenchmarkLogReportGenerator implements BenchmarkReportGeneratorInterface
                 'url' => $competitorTest->getWebsite()->getUrl(),
                 'status' => $competitorTest->getStatus(),
                 'loadTime' => $competitorTest->getLoadTime(),
-                'slowerBy' => $loadTimeDifference < 0 ? (- $loadTimeDifference . 's') : '--',
-                'fasterBy' => $loadTimeDifference > 0 ? ($loadTimeDifference . 's') : '--',
+                'slowerBy' => 200 === $competitorTest->getStatus() && $loadTimeDifference < 0 ? (- $loadTimeDifference . 's') : '--',
+                'fasterBy' => 200 === $competitorTest->getStatus() && $loadTimeDifference > 0 ? ($loadTimeDifference . 's') : '--',
             ];
         }
 

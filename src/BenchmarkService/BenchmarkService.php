@@ -62,9 +62,9 @@ class BenchmarkService
 
         $benchmark->getWebsiteTest()->setStatus($stats[$testedWebsiteUrl]['http_code']);
 
-        if ($stats[$testedWebsiteUrl]['http_code'] === 200) {
-            $benchmark->getWebsiteTest()->setLoadTime($stats[$testedWebsiteUrl]['total_time']);
-        }
+        $time = 200 === $stats[$testedWebsiteUrl]['http_code'] ? (float) $stats[$testedWebsiteUrl]['total_time'] : 0;
+
+        $benchmark->getWebsiteTest()->setLoadTime($time);
 
         /** @var WebsiteTest $competitorTest */
         foreach($benchmark->getCompetitorTests() as $competitorTest) {
@@ -72,9 +72,9 @@ class BenchmarkService
 
             $competitorTest->setStatus($stats[$competitorUrl]['http_code']);
 
-            if ($stats[$testedWebsiteUrl]['http_code'] === 200) {
-                $competitorTest->setLoadTime($stats[$competitorUrl]['total_time']);
-            }
+            $time = 200 === $stats[$competitorUrl]['http_code'] ? (float) $stats[$competitorUrl]['total_time'] : 0;
+
+            $competitorTest->setLoadTime($time);
         }
 
         return $benchmark;

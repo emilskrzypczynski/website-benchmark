@@ -9,6 +9,7 @@ namespace App\Analyzer;
 
 
 use App\Model\BenchmarkInterface;
+use App\Model\WebsiteTest;
 use App\Model\WebsiteTestInterface;
 
 class BenchmarkAnalyzer implements BenchmarkAnalyzerInterface
@@ -44,6 +45,10 @@ class BenchmarkAnalyzer implements BenchmarkAnalyzerInterface
 
         /** @var WebsiteTestInterface $competitorTest */
         foreach ($benchmark->getCompetitorTests() as $competitorTest) {
+            if (200 !== $competitorTest->getStatus()) {
+                continue;
+            }
+
             if ($testedWebsiteLoadTime / $competitorTest->getLoadTime() > 2) {
                 $result = true;
 
@@ -86,7 +91,12 @@ class BenchmarkAnalyzer implements BenchmarkAnalyzerInterface
 
         $websitesTests[] = $benchmark->getWebsiteTest();
 
+        /** @var WebsiteTest $competitorTest */
         foreach ($benchmark->getCompetitorTests() as $competitorTest) {
+            if (200 !== $competitorTest->getStatus()) {
+                continue;
+            }
+
             $websitesTests[] = $competitorTest;
         }
 

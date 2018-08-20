@@ -37,14 +37,14 @@
             <tr>
                 <td>{{ competitorTest.website.url }}</td>
                 <td>{{ competitorTest.status }}</td>
-                <td>{{ competitorTest.loadTime }}s</td>
+                <td>{{ competitorTest.loadTime ? competitorTest.loadTime ~ 's' : '--' }}</td>
                 <td>
                     {% set difference = websiteTest.loadTime - competitorTest.loadTime %}
-                    {{ difference < 0 ? -difference ~ 's' : '--'}}
+                    {{ competitorTest.loadTime != 0 and difference < 0 ? -difference ~ 's' : '--'}}
                 </td>
                 <td>
                     {% set difference = websiteTest.loadTime - competitorTest.loadTime %}
-                    {{ difference > 0 ? difference ~ 's' : '--'}}
+                    {{ competitorTest.loadTime != 0 and difference > 0 ? difference ~ 's' : '--'}}
                 </td>
             </tr>
         {% endfor %}
