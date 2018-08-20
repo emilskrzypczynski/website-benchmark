@@ -10,7 +10,7 @@
 
 4. In `.env` file set SMTP connection string (default: MAILER_URL=null://localhost)
 
-5. In `config/services.yml` change parameters in `email_notifier_config`
+5. Check parameters in `config/services.yml`
 
 6. Go to `docker` directory - `cd docker`
 
