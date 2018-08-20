@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="global.url.blank">
+                <source>global.url.blank</source>
+                <target>Please enter an url address</target>
+            </trans-unit>
+            <trans-unit id="global.url.invalid">
+                <source>global.url.invalid</source>
+                <target>An invalid url was entered</target>
+            </trans-unit>
+            <trans-unit id="global.url.invalid.with_value">
+                <source>global.url.invalid.with_value</source>
+                <target>An invalid url was entered ({{ value }})</target>
+            </trans-unit>
+            <trans-unit id="benchmark.competitors.min">
+                <source>benchmark.competitors.min</source>
+                <target>Enter at least one competitor's url address</target>
+            </trans-unit>
+            <trans-unit id="benchmark.competitors.max">
+                <source>benchmark.competitors.max</source>
+                <target>The maximum number of addresses is {{ limit }}</target>
+            </trans-unit>
+            <trans-unit id="benchmark.competitors.website_duplication">
+                <source>benchmark.competitors.website_duplication</source>
+                <target>Cannot compare website with her own ({{ value }})</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

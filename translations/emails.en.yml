@@ -1,0 +1,2 @@
+email.warning_notification.subject: 'Low %pagename% load performance warning'
+email.warning_notification.body: "\n                    \n                        <p>Hello, </p>\n\n                        <p>We noticed low speed of loading your site %pagename% against the competitors</p>\n\n                        <p>Below we present the report from the last benchmark:</p>\n                    \n                "

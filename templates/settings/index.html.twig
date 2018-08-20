@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Settings</h1>
+        </div>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+        {{ form_row(form.notificationEmail) }}
+        {{ form_row(form.notificationPhone) }}
+        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-lg d-flex mx-auto mt-4'}}) }}
+    </div>
+
+{% endblock %}

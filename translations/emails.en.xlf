@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="email.warning_notification.subject">
+                <source>email.warning_notification.subject</source>
+                <target>Low %pagename% load performance warning</target>
+            </trans-unit>
+            <trans-unit id="email.warning_notification.body">
+                <source>email.warning_notification.body</source>
+                <target>
+                    <![CDATA[
+                        <p>Hello, </p>
+
+                        <p>We noticed low speed of loading your site %pagename% against the competitors</p>
+
+                        <p>Below we present the report from the last benchmark:</p>
+                    ]]>
+                </target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

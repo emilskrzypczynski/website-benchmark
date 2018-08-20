@@ -1,0 +1,11 @@
+{% extends 'email/base.html.twig' %}
+{% trans_default_domain 'emails' %}
+
+
+{% block content %}
+{% autoescape false %}
+    {{ 'email.warning_notification.body'|trans( {'%pagename%' : benchmark.websiteTest.website.url} ) }}
+{% endautoescape %}
+
+{{ report|raw }}
+{% endblock %}

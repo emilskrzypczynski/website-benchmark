@@ -1,0 +1,51 @@
+parameters:
+    locale: 'en'
+
+    email_notifier_config:
+        from: emilskrzypczynski09@gmail.com
+        to: emilskrzypczynski09@gmail.com
+
+    benchmark_logfile_dir: '%kernel.logs_dir%/log.txt'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\Mailer\NotificationMailer:
+        arguments:
+            - '@mailer'
+            - '@router'
+            - '@templating.engine.twig'
+            - '@translator'
+            - '@App\Report\BenchmarkHTMLReportGenerator'
+            - '%email_notifier_config%'
+
+    App\Report\BenchmarkReportFactory: ~
+
+    App\Report\BenchmarkHTMLReportGenerator:
+        factory: 'App\Report\BenchmarkReportGeneratorFactory:createReport'
+        arguments:
+            $type: !php/const App\Report\ReportGeneratorFactory::TYPE_HTML
+            $config:
+                template: 'report/benchmark.html.twig'
+            $templating: '@templating'
+
+    App\Report\BenchmarkLogReportGenerator:
+        factory: 'App\Report\BenchmarkReportGeneratorFactory:createReport'
+        arguments:
+            $type: !php/const App\Report\ReportGeneratorFactory::TYPE_LOG
+            $config: []
+            $logger: '@logger'
+            $benchmarkAnalyzer: '@App\Analyzer\BenchmarkAnalyzer'
+        tags:
+            - { name: monolog.logger, channel: benchmark }

@@ -1,0 +1,6 @@
+global.url.invalid: 'An invalid url was entered'
+global.url.invalid.with_value: 'An invalid url was entered ({{ value }})'
+benchmark.competitors.min: 'Enter at least one competitor''s url address'
+benchmark.competitors.max: 'The maximum number of addresses is {{ limit }}'
+benchmark.competitors.website_duplication: 'Cannot compare website with her own ({{ value }})'
+global.url.blank: 'Please enter an url address'

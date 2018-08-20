@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="pt-md-5 pb-md-4 mx-auto text-center">
+            <h1 class="display-4">Website speed test</h1>
+            <p class="lead">Place the address of your site below and add the pages with you want to compare it.</p>
+        </div>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ form_start(form, {'attr': {'id': 'benchmark_form', 'class': 'benchmark-form', 'novalidate': 'novalidate'}}) }}
+        {{ form_row(form.website, {'label': 'Your webiste URL'}) }}
+        {{ form_row(form.competitors, {'label': 'Compare with', 'attr': {'rows': 8}}) }}
+        <small class="form-text text-muted">Put each address on a separate line (max 10)</small>
+
+        {{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary btn-lg d-flex mx-auto mt-4'}}) }}
+
+        {{ form_end(form) }}
+
+        {% if report %}{{ report|raw }}{% endif %}
+
+    </div>
+
+{% endblock %}

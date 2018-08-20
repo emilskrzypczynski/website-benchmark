@@ -1,0 +1,3 @@
+- `docker-compose build`
+- `docker-compose up -d`
+- `./bin/console translation:update --dump-messages --force en`

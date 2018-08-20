@@ -1,0 +1,53 @@
+{% set websiteTest = benchmarkResults.websiteTest %}
+
+<div class="benchmark-results">
+    <h5 class="mt-5">Website {{ websiteTest.website.url }} test results:</h5>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>Url</th>
+            <th>Status</th>
+            <th>Load time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ websiteTest.website.url }}</td>
+            <td>{{ websiteTest.status }}</td>
+            <td>{{ websiteTest.loadTime }}s</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="mt-5">Competitors test results:</h5>
+
+    <table class="table mt-4">
+        <thead>
+        <tr>
+            <th>Url</th>
+            <th>Status</th>
+            <th>Load time</th>
+            <th>Slower by</th>
+            <th>Faster by</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for competitorTest in benchmarkResults.competitorTests %}
+            <tr>
+                <td>{{ competitorTest.website.url }}</td>
+                <td>{{ competitorTest.status }}</td>
+                <td>{{ competitorTest.loadTime }}s</td>
+                <td>
+                    {% set difference = websiteTest.loadTime - competitorTest.loadTime %}
+                    {{ difference < 0 ? -difference ~ 's' : '--'}}
+                </td>
+                <td>
+                    {% set difference = websiteTest.loadTime - competitorTest.loadTime %}
+                    {{ difference > 0 ? difference ~ 's' : '--'}}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

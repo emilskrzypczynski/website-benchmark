@@ -1,0 +1,4 @@
+benchmark_form.check_form_errors: 'The form contains errors. Correct them and then send form again.'
+benchmark_form.submit_success: 'The form sent correctly.'
+form.global.check_form_errors: 'The form contains errors. Correct them and then send form again.'
+form.benchmark.submit_success: 'Benchmark generated correctly. Below are the results.'

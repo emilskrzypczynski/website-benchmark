@@ -1,0 +1,42 @@
+html {
+  font-size: 14px;
+
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+}
+
+.top-bar {
+  padding: .5rem 1rem;
+
+  &__logo {
+    color: #000;
+
+    &:hover,
+    &:active,
+    &:focus{
+      color: #000;
+      text-decoration: none;
+    }
+  }
+
+  &__nav-link {
+    color: #000;
+    display: inline-block;
+
+    &:hover,
+    &:active,
+    &:focus{
+      color: #000;
+      text-decoration: none;
+    }
+    
+    @media (min-width: 768px) {
+      padding: 0.5rem 1rem;
+    }
+
+    &.--active {
+      border-bottom: 1px solid #000;
+    }
+  }
+}
