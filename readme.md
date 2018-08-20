@@ -7,14 +7,12 @@
     `cd website-benchmark`
     
 3. Run `composer install`
-    
-4. Create .env file from .env.dist
 
-    `cp .env.dist .env`
+4. In `.env` file set SMTP connection string (default: MAILER_URL=null://localhost)
 
-5. In `.env` file set SMTP connection string (default: MAILER_URL=null://localhost)
+5. In `config/services.yml` change parameters in `email_notifier_config`
 
-6. In `config/services.yml` change parameters in `email_notifier_config`
+6. Go to `docker` directory - `cd docker`
 
 7. Run `docker-compose build` and `docker-compose up -d` 
 
