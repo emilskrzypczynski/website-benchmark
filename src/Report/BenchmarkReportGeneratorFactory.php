@@ -19,7 +19,6 @@ class BenchmarkReportGeneratorFactory extends ReportGeneratorFactory
      * @param array|null                        $config
      * @param null|EngineInterface              $templating
      * @param null|LoggerInterface              $logger
-     * @param BenchmarkAnalyzerInterface|null   $benchmarkAnalyzer
      * @return BenchmarkHTMLReportGenerator|BenchmarkLogReportGenerator|mixed
      * @throws \Exception
      */
@@ -27,8 +26,7 @@ class BenchmarkReportGeneratorFactory extends ReportGeneratorFactory
         string $type,
         ?array $config = [],
         ?EngineInterface $templating = null,
-        ?LoggerInterface $logger = null,
-        ?BenchmarkAnalyzerInterface $benchmarkAnalyzer = null
+        ?LoggerInterface $logger = null
     )
     {
         switch ($type) {
@@ -36,7 +34,7 @@ class BenchmarkReportGeneratorFactory extends ReportGeneratorFactory
                 return new BenchmarkHTMLReportGenerator($templating, $config);
                 break;
             case self::TYPE_LOG:
-                return new BenchmarkLogReportGenerator($logger, $benchmarkAnalyzer, $config);
+                return new BenchmarkLogReportGenerator($logger, $config);
                 break;
         }
 

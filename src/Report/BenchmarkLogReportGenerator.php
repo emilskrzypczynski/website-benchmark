@@ -19,9 +19,6 @@ class BenchmarkLogReportGenerator implements BenchmarkReportGeneratorInterface
     /** @var LoggerInterface */
     private $logger;
 
-    /** @var BenchmarkAnalyzerInterface */
-    private $benchmarkAnalyzer;
-
     /** @var array */
     private $config;
 
@@ -33,13 +30,11 @@ class BenchmarkLogReportGenerator implements BenchmarkReportGeneratorInterface
      * BenchmarkLogReportGenerator constructor.
      *
      * @param LoggerInterface               $logger
-     * @param BenchmarkAnalyzerInterface    $benchmarkAnalyzer
      * @param array                         $config
      */
-    public function __construct(LoggerInterface $logger, BenchmarkAnalyzerInterface $benchmarkAnalyzer, array $config)
+    public function __construct(LoggerInterface $logger, array $config)
     {
         $this->logger = $logger;
-        $this->benchmarkAnalyzer = $benchmarkAnalyzer;
         $this->config = $config;
     }
 
@@ -81,7 +76,7 @@ class BenchmarkLogReportGenerator implements BenchmarkReportGeneratorInterface
 
         /** @var WebsiteTest $competitorTest */
         foreach ($benchmark->getCompetitorTests() as $competitorTest) {
-            $loadTimeDifference = $this->benchmarkAnalyzer->calculateLoadTimeDifference($benchmark->getWebsiteTest()->getLoadTime(), $competitorTest->getLoadTime());
+            $loadTimeDifference = $benchmark->getWebsiteTest()->getLoadTime() - $competitorTest->getLoadTime();
 
             $context['competitorTests'][] = [
                 'url' => $competitorTest->getWebsite()->getUrl(),

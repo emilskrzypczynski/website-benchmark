@@ -67,6 +67,5 @@ services:
             $type: !php/const App\Report\ReportGeneratorFactory::TYPE_LOG
             $config: []
             $logger: '@logger'
-            $benchmarkAnalyzer: '@App\Analyzer\BenchmarkAnalyzer'
         tags:
             - { name: monolog.logger, channel: benchmark }
