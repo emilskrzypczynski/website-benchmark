@@ -5,12 +5,14 @@ namespace App\Controller;
 use App\BenchmarkService\BenchmarkService;
 use App\Event\BenchmarkEvent;
 use App\Event\Events;
+use App\Exception\WebsiteFetchException;
 use App\Form\Model\BenchmarkRequest;
 use App\Form\Type\BenchmarkType;
 use App\Report\BenchmarkHTMLReportGenerator;
 use App\Report\ReportGeneratorFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -65,26 +67,33 @@ class BenchmarkController extends AbstractController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $benchmark = $this->benchmarkService->createFromRequest($benchmarkRequest);
+                try {
+                    $benchmark = $this->benchmarkService->createFromRequest($benchmarkRequest);
 
-                $this->eventDispatcher->dispatch(
-                    Events::ON_BENCHMARK_FINISH,
-                    new BenchmarkEvent($benchmark)
-                );
+                    $this->eventDispatcher->dispatch(
+                        Events::ON_BENCHMARK_FINISH,
+                        new BenchmarkEvent($benchmark)
+                    );
 
-                $benchmarkHtmlReport = $this->benchmarkHTMLReportGenerator
-                    ->create($benchmark)
-                    ->getAsHTML();
+                    $benchmarkHtmlReport = $this->benchmarkHTMLReportGenerator
+                        ->create($benchmark)
+                        ->getAsHTML();
 
-                $this->addFlash(
-                    "success",
-                    $this->translator->trans('form.benchmark.submit_success', [], 'messages')
-                );
+                    $this->addFlash(
+                        "success",
+                        $this->translator->trans('form.benchmark.submit_success', [], 'messages')
+                    );
 
-                $this->session->set('lastReport', $benchmarkHtmlReport);
+                    $this->session->set('lastReport', $benchmarkHtmlReport);
 
-                return $this->redirectToRoute('benchmark_index');
+                    return $this->redirectToRoute('benchmark_index');
 
+                } catch (WebsiteFetchException $e) {
+                    $this->addFlash(
+                        "danger",
+                        $this->translator->trans('benchmark.website.fetch_error', [], 'validators')
+                    );
+                }
             } else {
                 $this->session->remove('lastReport');
 

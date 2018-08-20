@@ -9,6 +9,7 @@ namespace App\BenchmarkService;
 
 
 use App\DataTransformer\BenchmarkDataTransformer;
+use App\Exception\WebsiteFetchException;
 use App\Form\Model\BenchmarkRequest;
 use App\Model\BenchmarkInterface;
 use App\Model\WebsiteTest;
@@ -31,6 +32,11 @@ class BenchmarkService
         $this->dataTransformer = $dataTransformer;
     }
 
+    /**
+     * @param BenchmarkRequest $benchmarkRequest
+     * @return BenchmarkInterface
+     * @throws WebsiteFetchException
+     */
     public function createFromRequest(BenchmarkRequest $benchmarkRequest): BenchmarkInterface
     {
         $benchmark = $this->dataTransformer->createModelFromRequest($benchmarkRequest);
@@ -61,6 +67,10 @@ class BenchmarkService
         Promise\settle($promises)->wait();
 
         $benchmark->getWebsiteTest()->setStatus($stats[$testedWebsiteUrl]['http_code']);
+
+        if (200 !== $stats[$testedWebsiteUrl]['http_code']) {
+            throw new WebsiteFetchException(sprintf("The page %s cannot be fetched", $testedWebsiteUrl));
+        }
 
         $time = 200 === $stats[$testedWebsiteUrl]['http_code'] ? (float) $stats[$testedWebsiteUrl]['total_time'] : 0;
 
