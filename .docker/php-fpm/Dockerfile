@@ -28,7 +28,8 @@ RUN apk add --update \
     php7-simplexml \
     php7-xdebug \
     make \
-    curl
+    curl \
+    git
 
 RUN rm -rf /var/cache/apk/* && rm -rf /tmp/* && \
     curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
